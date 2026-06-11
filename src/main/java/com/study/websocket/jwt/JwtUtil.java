@@ -44,5 +44,19 @@ public class JwtUtil {
                 .getPayload();
         return claims.getSubject();
     }
+    
+    // 헤더에서 토큰 추출 
+    public String resolveToken(String authHeader) {
+        if (authHeader == null) {
+            throw new IllegalArgumentException("Authorization 헤더 없음");
+        }
+        if (!authHeader.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Bearer 토큰 형식이 아닙니다");
+        }
+
+        return authHeader.substring("Bearer ".length());
+    }
+
+    
 
 }

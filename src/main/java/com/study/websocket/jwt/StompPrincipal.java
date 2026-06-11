@@ -11,11 +11,12 @@ import lombok.RequiredArgsConstructor;
 import java.security.Principal;
 
 // Authentication 대용
+// 웹소켓 프레임워크가 사용자를 식별할때 getName() 호출해서 인식
 @RequiredArgsConstructor
 public class StompPrincipal implements Principal {
     private final String name;
     @Override
     public String getName() {
-        return "";
+        return this.name;
     }
 }
