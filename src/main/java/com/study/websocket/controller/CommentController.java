@@ -6,6 +6,7 @@ package com.study.websocket.controller;
 import com.study.websocket.dto.CommentRequest;
 import com.study.websocket.dto.ReplyRequest;
 import com.study.websocket.event.CommentEvent;
+import com.study.websocket.event.ReplyEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,9 @@ public class CommentController {
     @PostMapping("/replies")
     @ResponseStatus(HttpStatus.OK)
     public void addReply(@RequestBody ReplyRequest request) {
-
+        // 트랜잭션으로 대댓글 db 저장
+        ReplyEvent e = new ReplyEvent(request.getCommentAuthor(), request.getReplier(), request.getBody());
+        publisher.publishEvent(e);
     }
 
 }

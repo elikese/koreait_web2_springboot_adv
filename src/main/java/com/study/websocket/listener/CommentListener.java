@@ -1,6 +1,7 @@
 package com.study.websocket.listener;
 
 import com.study.websocket.event.CommentEvent;
+import com.study.websocket.event.ReplyEvent;
 import com.study.websocket.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -19,4 +20,12 @@ public class CommentListener {
         String msg = e.getCommenter() + "님이 회원님의 글에 댓글을 남겼습니다: " + e.getBody();
         notificationService.sendToUser(e.getPostAuthor(), msg);
     }
+
+    @EventListener
+    public void onReplyCreated(ReplyEvent e) {
+        String msg = e.getReplier() + "님이 답글을 남겼습니다: " + e.getBody();
+        notificationService.sendToUser(e.getCommentAuthor(), msg);
+    }
+
+
 }
